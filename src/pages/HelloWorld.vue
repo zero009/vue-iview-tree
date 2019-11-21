@@ -18,26 +18,33 @@ export default {
       count:0,
         rows: [
             {
-                id: 0, name: '项目管理', indeterminate: false, isFold: false, checked: false,
+                id: 0, name: '海贼王', indeterminate: false, isFold: false, checked: false,
                 children: [
-                    { id:10,name: '训练营课程组合', indeterminate: false, isFold: false,checked: false,
+                    { id:10,name: '路飞', indeterminate: false, isFold: false,checked: false,
                         children: [
-                            { id: 20, name: '课程组合模板', indeterminate: false,isFold: false, checked: false,
+                            { id: 20, name: '娜美', indeterminate: false,isFold: false, checked: false,
                                 children: [
-                                    {id: 30, name: '查看列表', indeterminate: false, isFold: false, checked: false},
-                                    {id: 31, name: '查询', indeterminate: false, isFold: false, checked: false},
-                                    {id: 32, name: '查询详情', indeterminate: false, isFold: false, checked: false},
-                                    {id: 33, name: '创建', indeterminate: false, isFold: false, checked: false}]},
-                            {id: 21, name: '团队课程组合', indeterminate: false, isFold: false, checked: false}
+                                    {id: 30, name: '小兵1', indeterminate: false, isFold: false, checked: false},
+                                    {id: 31, name: '小兵2', indeterminate: false, isFold: false, checked: false},
+                                    {id: 32, name: '小兵3', indeterminate: false, isFold: false, checked: false},
+                                    {id: 33, name: '小兵4', indeterminate: false, isFold: false, checked: false}]},
+                            {id: 21, name: '乌索普', indeterminate: false, isFold: false, checked: false}
                         ]
                     },
-                    {id: 1, name: '训练营课程库', indeterminate: false, isFold: false, checked: false,
+                    {id: 11, name: '索隆', indeterminate: false, isFold: false, checked: false,
                     children: [
-                                    {id: 100, name: '查看列表2', indeterminate: false, isFold: false, checked: false},
-                                    {id: 102, name: '查询2', indeterminate: false, isFold: false, checked: false},
-                                    {id: 312, name: '查询详情2', indeterminate: false, isFold: false, checked: false},
-                                    {id: 133, name: '创建2', indeterminate: false, isFold: false, checked: false}]}
+                                    {id: 100, name: '小虾米1', indeterminate: false, isFold: false, checked: false},
+                                    {id: 102, name: '小虾米2', indeterminate: false, isFold: false, checked: false},
+                                    {id: 312, name: '小虾米3', indeterminate: false, isFold: false, checked: false},
+                                    {id: 133, name: '小虾米4', indeterminate: false, isFold: false, checked: false}]}
                 ]
+            },
+            {
+            	id: 2, name: '火影忍者', indeterminate: false, isFold: false, checked: false,
+            	children: [
+                    { id:20,name: '宇智波', indeterminate: false, isFold: false,checked: false},
+                    { id:21,name: '鸣人', indeterminate: false, isFold: false,checked: false}
+                    ]
             }
         ]
     }
