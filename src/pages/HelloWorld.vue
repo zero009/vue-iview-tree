@@ -1,21 +1,18 @@
 <template>
   <div class="wrap">
-      <horizontal-tree v-for="node,index in rows" :data="node" :count="index" :key="node.id" class="node_con"></horizontal-tree>
+      <horizontal-tree v-for="node,index in rows" :data="node" :key="node.id" class="node_con"></horizontal-tree>
 			<button @click="submit">保存</button>	
-      <!--<tree-line :detail="rows"></tree-line>-->
   </div>
 </template>
 
 <script>
     import HorizontalTree from '@/components/HorizontalTree'
 
-    import TreeLine from '@/components/TreeLine'
 export default {
   name: 'HelloWorld',
   data () {
     return {
       checkAllGroup:[],
-      count:0,
         rows: [
             {
                 id: 0, name: '海贼王', indeterminate: false, isFold: false, checked: false,
@@ -27,7 +24,12 @@ export default {
                                     {id: 30, name: '小兵1', indeterminate: false, isFold: false, checked: false},
                                     {id: 31, name: '小兵2', indeterminate: false, isFold: false, checked: false},
                                     {id: 32, name: '小兵3', indeterminate: false, isFold: false, checked: false},
-                                    {id: 33, name: '小兵4', indeterminate: false, isFold: false, checked: false}]},
+                                    {id: 33, name: '小兵4', indeterminate: false, isFold: false, checked: false,
+                                    children: [{id: 33, name: '小小兵4', indeterminate: false, isFold: false, checked: false,
+                                     children: [{id: 33, name: '小小兵4', indeterminate: false, isFold: false, checked: false}]
+                                     }]
+                                    }
+                                    ]},
                             {id: 21, name: '乌索普', indeterminate: false, isFold: false, checked: false}
                         ]
                     },
@@ -50,8 +52,7 @@ export default {
     }
   },
   components: {
-    HorizontalTree,
-    TreeLine
+    HorizontalTree
   },
   methods: {
   	submit () {

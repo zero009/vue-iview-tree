@@ -10,7 +10,7 @@
         </div>
         <transition name="fade">
 	        <div class="tree-children list" v-if="data.children" v-show="!data.isFold">
-	            <horizontal-tree v-for="node,index in data.children" :count="index" :data="node" :key="node.id"></horizontal-tree>
+	            <horizontal-tree v-for="node,index in data.children" :data="node" :key="node.id"></horizontal-tree>
 	        </div>
         </transition>
        
@@ -21,8 +21,7 @@
 export default {
   name: 'HorizontalTree',
   props: {
-    data: Object,
-    count:Number
+    data: Object
   },
   data () {
     return {
@@ -39,63 +38,60 @@ export default {
     handleCheckAll (data) {
       data.checked = !data.checked
       data.indeterminate = false
-	  
       if (data.checked) {
-        this.checkAllGroup.push(data.id)
         this.cycleParent(this.$parent)
-        if (data.children && data.children.length > 0) this.tree(this.checkAllGroup, data.children)
+        if (data.children && data.children.length > 0) this.tree(data.children)
       } else {
       	this.cycleParent(this.$parent,'remove')
-        if (data.children && data.children.length > 0) this.tree(this.checkAllGroup, data.children, 'remove')
+        if (data.children && data.children.length > 0) this.tree(data.children, 'remove')
       }
     },
     // 父影响子
-    tree (arr, data, str) {
+    tree (data, str) {
       if (data) {
         data.map(res => {
-         //console.log(res)
           res.indeterminate = false
-          if (str === 'remove') {
-            res.checked = false
-          } else {
-            res.checked = true
-            this.checkAllGroup.push(res.id)
-          }
+          res.checked = str === 'remove' ? false:true
           if (res.children && res.children.length > 0) {
-            this.tree(arr, res.children, str)
+            this.tree(res.children, str)
           }
         })
       }
     },
     // 子影响父
     cycleParent ($p,str) {
-    	let arrChecked = []
-    	if($p.data) {
-    		$p.data.checked = true
-    		if ($p.data.children && $p.data.children.length>0){
-    			$p.data.children.map(m=>{
-    				if(m.checked==true) arrChecked.push(m.checked)
-	    		})
-    			if (str || this.isIndeter){
-    				$p.data.indeterminate = true
-    			} else {
-    				if ($p.data.children.length == arrChecked.length){ console.log(1)
-	    				$p.data.indeterminate = false
-	    			} else {
+	    	let arrChecked = [], id=null
+	    	if($p.data) {
+	    		$p.data.checked = true
+	    		if ($p.data.children && $p.data.children.length>0){
+	    			$p.data.children.map(m=>{
+	    				if(m.checked==true) arrChecked.push(m)
+	    				if(m.indeterminate==true){
+	    					id = $p.data.id
+	    				}
+		    		})
+	    			if (str && this.isIndeter){
 	    				$p.data.indeterminate = true
-	    				this.isIndeter = true
+	    			} else {
+	    				if ($p.data.children.length == arrChecked.length){
+		    				$p.data.indeterminate = false
+		    				if(id == $p.data.id) {
+		    					$p.data.indeterminate = true
+		    				}
+		    			} else {
+		    				$p.data.indeterminate = true
+		    				this.isIndeter = true
+		    			}
 	    			}
-    			}
-    			
-    			if (arrChecked.length == 0){
-    				$p.data.checked = false
-    				$p.data.indeterminate = false
-    			}
-    		}
-    		if ($p.$parent.data){
-    			this.cycleParent($p.$parent,str)
-    		}
-    	}
+	    			if (arrChecked.length == 0){
+	    				$p.data.checked = false
+	    				$p.data.indeterminate = false
+	    			}
+	    		}
+	    		if ($p.$parent.data){
+	    			this.cycleParent($p.$parent,str)
+	    		}
+	    	}    			
     },
     // 收起展开
     hideChildren (data) {
