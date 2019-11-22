@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
-      <horizontal-tree v-for="node,index in rows" :data="node" :key="node.id" class="node_con"></horizontal-tree>
-			<button @click="submit">保存</button>	
+      <horizontal-tree v-for="node in rows" :data="node" :key="node.id" :class="[rows.length==1 ? 'node_con':'node_wrap']"></horizontal-tree>
+			<button @click="submit">保存</button>
   </div>
 </template>
 
@@ -15,37 +15,42 @@ export default {
       checkAllGroup:[],
         rows: [
             {
-                id: 0, name: '海贼王', indeterminate: false, isFold: false, checked: false,
+                id: 0, name: '海贼王', checked: false,
                 children: [
-                    { id:10,name: '路飞', indeterminate: false, isFold: false,checked: false,
+                    { id:10,name: '路飞', checked: false,
                         children: [
-                            { id: 20, name: '娜美', indeterminate: false,isFold: false, checked: false,
+                            { id: 20, name: '娜美', checked: false,
                                 children: [
-                                    {id: 30, name: '小兵1', indeterminate: false, isFold: false, checked: false},
-                                    {id: 31, name: '小兵2', indeterminate: false, isFold: false, checked: false},
-                                    {id: 32, name: '小兵3', indeterminate: false, isFold: false, checked: false},
-                                    {id: 33, name: '小兵4', indeterminate: false, isFold: false, checked: false,
-                                    children: [{id: 33, name: '小小兵4', indeterminate: false, isFold: false, checked: false,
-                                     children: [{id: 33, name: '小小兵4', indeterminate: false, isFold: false, checked: false}]
+                                    {id: 30, name: '小兵1', checked: false},
+                                    {id: 31, name: '小兵2', checked: false},
+                                    {id: 32, name: '小兵3', checked: false},
+                                    {id: 33, name: '小兵4', checked: false,
+                                    children: [{id: 33, name: '小小兵4', checked: false,
+                                     children: [{id: 34, name: '小小兵5', checked: false}]
                                      }]
                                     }
                                     ]},
-                            {id: 21, name: '乌索普', indeterminate: false, isFold: false, checked: false}
+                            {id: 21, name: '乌索普', checked: false}
                         ]
                     },
-                    {id: 11, name: '索隆', indeterminate: false, isFold: false, checked: false,
+                    {id: 11, name: '索隆', checked: false,
                     children: [
-                                    {id: 100, name: '小虾米1', indeterminate: false, isFold: false, checked: false},
-                                    {id: 102, name: '小虾米2', indeterminate: false, isFold: false, checked: false},
-                                    {id: 312, name: '小虾米3', indeterminate: false, isFold: false, checked: false},
-                                    {id: 133, name: '小虾米4', indeterminate: false, isFold: false, checked: false}]}
+                                    {id: 100, name: '小虾米1', checked: false},
+                                    {id: 102, name: '小虾米2', checked: false},
+                                    {id: 312, name: '小虾米3', checked: false},
+                                    {id: 133, name: '小虾米4', checked: false}]}
                 ]
             },
             {
-            	id: 2, name: '火影忍者', indeterminate: false, isFold: false, checked: false,
+            	id: 2, name: '火影忍者', checked: false,
             	children: [
-                    { id:20,name: '宇智波', indeterminate: false, isFold: false,checked: false},
-                    { id:21,name: '鸣人', indeterminate: false, isFold: false,checked: false}
+                    { id:20,name: '宇智波', checked: false,children:[
+                        { id: 21, name: '佐助', checked: false},
+                        { id: 24, name: '鸣人', checked: false},
+                        { id: 22, name: '小樱', checked: false},
+                        { id: 23, name: '左良娜', checked: false}
+                      ]},
+
                     ]
             }
         ]
@@ -53,6 +58,9 @@ export default {
   },
   components: {
     HorizontalTree
+  },
+  created() {
+    this.initData(this.rows)
   },
   methods: {
   	submit () {
@@ -72,18 +80,46 @@ export default {
 		  			this.cycleData(m.children)
 		  		}
   			}
-  			
+
   		})
-  	}
+  	},
+    // 初始化数据转成需要的格式
+    initData (data) {
+      if (data.length > 0) {
+        data.map(item => {
+          let arr = []
+          this.$set(item, 'isFold', false)
+          if(item.checked) arr.push(item.checked)
+          if (item.children&&item.children.length>0){
+            if (item.children.length == arr.length){
+              item.checked = true
+              this.$set(item,'indeterminate', false)
+            } else if(item.children.length != arr.length && arr.length>0){
+              item.checked = true
+              this.$set(item,'indeterminate', true)
+            } else{
+              this.$set(item,'indeterminate', false)
+            }
+            this.initData(item.children)
+          } else {
+            if(item.checked) {
+              item.checked= true
+            }
+            this.$set(item,'indeterminate', false)
+          }
+        })
+      }
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 	.wrap{
 		width: 900px;
 		text-align: center;
+    padding: 40px;
 	}
 	button{
 		width: 130px;
@@ -101,4 +137,7 @@ export default {
 	.node_con:before{
 		display: none;
 	}
+  .node_wrap:nth-last-of-type(1){
+    border: none;
+  }
 </style>
