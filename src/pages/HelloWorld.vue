@@ -15,15 +15,15 @@ export default {
       checkAllGroup:[],
         rows: [
             {
-                id: 0, name: '海贼王', checked: false,
+                id: 0, name: '海贼王', checked: 1,
                 children: [
-                    { id:10,name: '路飞', checked: false,
+                    { id:10,name: '路飞', checked: 1,
                         children: [
-                            { id: 20, name: '娜美', checked: false,
+                            { id: 20, name: '娜美', checked: 1,
                                 children: [
-                                    {id: 30, name: '小兵1', checked: false},
-                                    {id: 31, name: '小兵2', checked: false},
-                                    {id: 32, name: '小兵3', checked: false},
+                                    {id: 30, name: '小兵1', checked: 1},
+                                    {id: 31, name: '小兵2', checked: 1},
+                                    {id: 32, name: '小兵3', checked: 1},
                                     {id: 33, name: '小兵4', checked: false,
                                     children: [{id: 33, name: '小小兵4', checked: false,
                                      children: [{id: 34, name: '小小兵5', checked: false}]
@@ -115,29 +115,29 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped type="text/css" lang="less">
 	.wrap{
 		width: 900px;
 		text-align: center;
     padding: 40px;
+    button{
+      width: 130px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 18px;
+      background: #ccc;
+      color: #fff;
+      outline: none;
+      border: 1px solid #ddd;
+    }
+    .node_con{
+      border:none;
+    }
+    .node_con:before{
+      display: none;
+    }
+    .node_wrap:nth-last-of-type(1){
+      border: none;
+    }
 	}
-	button{
-		width: 130px;
-		height: 30px;
-		line-height: 30px;
-		font-size: 18px;
-		background: #ccc;
-		color: #fff;
-		outline: none;
-		border: 1px solid #ddd;
-	}
-	.node_con{
-		border:none;
-	}
-	.node_con:before{
-		display: none;
-	}
-  .node_wrap:nth-last-of-type(1){
-    border: none;
-  }
 </style>
